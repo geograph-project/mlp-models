@@ -2,8 +2,8 @@
 
 class GeographSubjectModel extends GeographModelBase {
     public function predict_api($inputs, $k = 10) {
-        $clip_vec = $inputs['clip-image'];
-        $dist_idx = $inputs['distance'];
+        $clip_vec = $this->decode_embedding($inputs['clip-image']);
+        $dist_idx = $this->get_dist_idx($inputs['distance']);
         $image_id = $inputs['image_id'] ?? null;
 
         $d_feat = $this->embedding($dist_idx, "dist_emb.weight");

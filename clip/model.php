@@ -2,8 +2,8 @@
 
 class GeographClipModel extends GeographModelBase {
     public function predict_api($inputs, $threshold = 0.2) {
-        $img_embeds = $inputs['clip-image'];
-        $txt_embeds = $inputs['clip-title'];
+        $img_embeds = $this->decode_embedding($inputs['clip-image']);
+        $txt_embeds = $this->decode_embedding($inputs['clip-title']);
         $image_id = $inputs['image_id'] ?? null;
 
         $x = $this->concat([$img_embeds, $txt_embeds]);

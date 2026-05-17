@@ -2,8 +2,8 @@
 
 class GeographGalleryModel extends GeographModelBase {
     public function predict_api($inputs) {
-        $clip_vec = $inputs['clip-image'];
-        $pe_vec = $inputs['pe-image'];
+        $clip_vec = $this->decode_embedding($inputs['clip-image']);
+        $pe_vec = $this->decode_embedding($inputs['pe-image']);
         $image_id = $inputs['image_id'] ?? null;
 
         $x = $this->concat([$clip_vec, $pe_vec]);
