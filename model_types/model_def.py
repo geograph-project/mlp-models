@@ -72,6 +72,24 @@ class GeographTypesModel(nn.Module):
         return flat_results
 
 
+    def save_json_checkpoint(self, filepath):
+        import json
+        state_dict = self.state_dict()
+        serializable_state_dict = {k: v.cpu().tolist() for k, v in state_dict.items()}
+
+        data = {
+            "metadata": {
+                "clip_dim": self.clip_dim,
+                "dist_embed_dim": self.dist_embed_dim,
+                "classes": self.classes,
+                "dist_map": self.dist_map
+            },
+            "state_dict": serializable_state_dict
+        }
+
+        with open(filepath, 'w') as f:
+            json.dump(data, f)
+
     @classmethod
     def load_checkpoint(cls, filepath, device='cpu'):
         """
